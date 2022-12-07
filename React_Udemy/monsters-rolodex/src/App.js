@@ -12,12 +12,11 @@ class App extends Component {
     console.log("constructor");
   }
 
-  //
   componentDidMount() {
     console.log("componentDidMount");
     fetch("https://jsonplaceholder.typicode.com/users")
-      .then(response => response.json())
-      .then(mstrs => {
+      .then((response) => response.json())
+      .then((mstrs) => {
         this.setState(
           () => {
             return { monsters: mstrs };
@@ -29,11 +28,28 @@ class App extends Component {
       });
   }
 
+  /**
+   * @param {event} event that captured
+   * if the function is written within 'onChange' attribute of input, the function would be created
+   * everytime when 'onChange' is called, which is less performance
+   */
+  onSearchChange = (event) => {
+    console.log(event.target.value);
+    const searchField = event.target.value.toLowerCase();
+    this.setState(() => {
+      return { searchField };
+    });
+  };
+
   render() {
     console.log("render");
 
-    const filteredMonsters = this.state.monsters.filter(monster =>
-      monster.name.toLowerCase().includes(this.state.searchField),
+    // use destruction in ES6 to avoid using too many 'this'
+    const { monsters, searchField } = this.state;
+    const { onSearchChange } = this;
+
+    const filteredMonsters = monsters.filter((monster) =>
+      monster.name.toLowerCase().includes(searchField),
     );
 
     return (
@@ -42,15 +58,9 @@ class App extends Component {
           className="search-box"
           type="search"
           placeholder="search monsters"
-          onChange={event => {
-            console.log(event.target.value);
-            const searchField = event.target.value.toLowerCase();
-            this.setState(() => {
-              return { searchField };
-            });
-          }}
+          onChange={onSearchChange}
         />
-        {filteredMonsters.map(monster => (
+        {filteredMonsters.map((monster) => (
           <div key={monster.id}>
             <h2>{monster.name}</h2>
           </div>
