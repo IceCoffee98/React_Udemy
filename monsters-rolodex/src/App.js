@@ -23,7 +23,7 @@ class App extends Component {
           },
           () => {
             console.log(this.state.monsters);
-          },
+          }
         );
       });
   }
@@ -49,7 +49,7 @@ class App extends Component {
     const { onSearchChange } = this;
 
     const filteredMonsters = monsters.filter((monster) =>
-      monster.name.toLowerCase().includes(searchField),
+      monster.name.toLowerCase().includes(searchField)
     );
 
     return (
