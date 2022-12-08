@@ -10,6 +10,7 @@ const App = () => {
   const [searchField, setSearchField] = useState(''); // [value, setValue]
   const [monsters, setMonsters] = useState([]);
   const [filteredMonsters, setFilteredMonsters] = useState(monsters);
+  const [title, setTitle] = useState('');
   // console.log({ searchField });
   // console.log('render');
 
@@ -37,17 +38,27 @@ const App = () => {
     setSearchField(searchFieldStr);
   };
 
+  const onTitleChange = (event) => {
+    const changedTitles = event.target.value.toLocaleLowerCase();
+    setTitle(changedTitles);
+  };
+
   // the function will be called everytime when other props changed
   // const filteredMonsters = monsters.filter((monster) =>
   //   monster.name.toLowerCase().includes(searchField)
   // );
   return (
     <div className='App'>
-      <h1 className='app-title'>Monsters Rolodex</h1>
+      <h1 className='app-title'>{title}</h1>
       <SearchBox
         className='monster-search-box'
         placeholder='please input the name'
         onChangeHandler={onSearchChange}
+      />
+      <SearchBox
+        className='title-search-box'
+        placeholder='input title name'
+        onChangeHandler={onTitleChange}
       />
       <CardList monsters={filteredMonsters} />
     </div>

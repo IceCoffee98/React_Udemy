@@ -30,12 +30,25 @@
           React.createElement(
             'h1',
             { className: 'title', key: 3 },
-            'React is rendered'
+            'React is Rendered'
           ),
           React.createElement(
             Person,
-            { name: 'Yixuan', occupation: 'Developer', key: 3 },
-            'React is rendered'
+            {
+              name: 'Yixuan',
+              occupation: 'Developer',
+              key: 4,
+            },
+            null
+          ),
+          React.createElement(
+            Person,
+            {
+              name: 'Wendy',
+              occupation: 'Singer',
+              key: 5,
+            },
+            null
           ),
         ]);
       };
