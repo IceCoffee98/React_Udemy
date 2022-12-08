@@ -11,7 +11,7 @@ const App = () => {
   const [monsters, setMonsters] = useState([]);
   const [filteredMonsters, setFilteredMonsters] = useState(monsters);
   // console.log({ searchField });
-  console.log('render');
+  // console.log('render');
 
   // don't write fetch() here without wrapping into 'useEffect',
   // which will change 'monsters' every time App() is called
