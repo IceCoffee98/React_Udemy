@@ -1,14 +1,21 @@
-// import { Component } from 'react';
-import logo from './logo.svg';
+import { Component, ChangeEvent } from 'react';
+// import logo from './logo.svg';
 import SearchBox from './components/search-box/search-box.component';
 import CardList from './components/card-list/card-list.component';
 import './App.css';
 import { useState, useEffect } from 'react';
+import { getData } from './utils/data.utils';
+
+export type Monster = {
+  id: string;
+  name: string;
+  email: string;
+};
 
 const App = () => {
   // when the 'searchField' changes rather than setSearchField() called, the func re-runs
   const [searchField, setSearchField] = useState(''); // [value, setValue]
-  const [monsters, setMonsters] = useState([]);
+  const [monsters, setMonsters] = useState<Monster[]>([]);
   const [filteredMonsters, setFilteredMonsters] = useState(monsters);
   const [title, setTitle] = useState('');
   // console.log({ searchField });
@@ -18,9 +25,11 @@ const App = () => {
   // which will change 'monsters' every time App() is called
   // because the array reference is different
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then((response) => response.json())
-      .then((users) => setMonsters(users));
+    // fetch('https://jsonplaceholder.typicode.com/users')
+    // .then((response) => response.json())
+    // .then((users) => setMonsters(users));
+    (async () =>
+      setMonsters(await getData<Monster[]>('https://jsonplaceholder.typicode.com/users')))();
   }, []);
 
   // the filterMonster is called only when [searchField, monsters] state changed
@@ -33,12 +42,12 @@ const App = () => {
     setFilteredMonsters(newFilteredMonsters);
   }, [searchField, monsters]);
 
-  const onSearchChange = (event) => {
+  const onSearchChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const searchFieldStr = event.target.value.toLocaleLowerCase();
     setSearchField(searchFieldStr);
   };
 
-  const onTitleChange = (event) => {
+  const onTitleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const changedTitles = event.target.value.toLocaleLowerCase();
     setTitle(changedTitles);
   };
